@@ -84,7 +84,11 @@ class Robot:
           self.y -= 1
       else:
         print('Edge of the table')
+# end of robot object
 
+
+# command object
+class Command:
   # called by run_robot method, open commands files reads lines and formats to uppercase and removes spaces
   def read_commands(self, filename:str) -> list[str]:
     with open(filename, 'r') as f:
@@ -95,23 +99,13 @@ class Robot:
       return commands
 
   # defining what commands to pass to the robot
-  def run_robot(self, table:Table, filename:str) -> None:
+  def run_robot(self, table:Table, robot:Robot, filename:str) -> None:
     robot_commands = self.read_commands(filename)
     for cmd in robot_commands:
-      if self.check_on_table():
-        self.command_check(cmd, table)
+      if robot.check_on_table():
+        robot.command_check(cmd, table)
       elif 'PLACE' in cmd:
-        self.command_check(cmd, table)
+        robot.command_check(cmd, table)
       else:
         print('Robot not on the table')
-
-# end of robot object
-
-
-
-
-# table size is (x,y) = 5 x 5
-table = Table(5, 5)
-robot = Robot()
-
-robot.run_robot(table, 'commands.txt')
+# end of command object
