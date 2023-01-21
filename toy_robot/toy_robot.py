@@ -90,8 +90,13 @@ class Robot:
 # command object
 class Command:
   # called by run_robot method, open commands files reads lines and formats to uppercase and removes spaces
-  def read_commands(self, filename:str) -> list[str]:
-    with open(filename, 'r') as f:
+  def __init__(self, table:Table, robot:Robot, filename:str):
+    self.table = table
+    self.robot = robot
+    self.filename = filename
+
+  def read_commands(self) -> list[str]:
+    with open(self.filename, 'r') as f:
       commands = f.readlines()
       for i, cmd in enumerate(commands):
         commands[i] = cmd.upper()
@@ -99,13 +104,15 @@ class Command:
       return commands
 
   # defining what commands to pass to the robot
-  def run_robot(self, table:Table, robot:Robot, filename:str) -> None:
-    robot_commands = self.read_commands(filename)
+  def run_robot(self) -> None:
+    robot_commands = self.read_commands()
     for cmd in robot_commands:
-      if robot.check_on_table():
-        robot.command_check(cmd, table)
+      if self.robot.check_on_table():
+        self.robot.command_check(cmd, self.table)
       elif 'PLACE' in cmd:
-        robot.command_check(cmd, table)
+        self.robot.command_check(cmd, self.table)
       else:
         print('Robot not on the table')
+    print('End of commands, last location is:')
+    print(self.robot.location_report())
 # end of command object
