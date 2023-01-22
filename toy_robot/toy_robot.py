@@ -72,7 +72,7 @@ class Robot:
     elif self.direction == 'WEST':
       if self.x > 0:
         self.x -= 1
-    if self.direction == 'NORTH':
+    elif self.direction == 'NORTH':
       if self.y < table.height:
         self.y += 1
     elif self.direction == 'SOUTH':
