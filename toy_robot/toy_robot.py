@@ -66,24 +66,20 @@ class Robot:
 
 # checking if movement is x or y based on direction robot is facing, then incrementing or decreasing x or y until table limit
   def move(self, table:Table) -> None:
-    if self.direction == 'EAST' or self.direction == 'WEST':
-      if self.direction == 'EAST':
-        if self.x < table.width:
-          self.x += 1
-      elif self.direction == 'WEST':
-        if self.x > 0:
-          self.x -= 1
-      else:
-        print('Edge of the table')
-    if self.direction == 'NORTH' or self.direction == 'SOUTH':
-      if self.direction == 'NORTH':
-        if self.y < table.height:
-          self.y += 1
-      elif self.direction == 'SOUTH':
-        if self.y > 0:
-          self.y -= 1
-      else:
-        print('Edge of the table')
+    if self.direction == 'EAST':
+      if self.x < table.width:
+        self.x += 1
+    elif self.direction == 'WEST':
+      if self.x > 0:
+        self.x -= 1
+    if self.direction == 'NORTH':
+      if self.y < table.height:
+        self.y += 1
+    elif self.direction == 'SOUTH':
+      if self.y > 0:
+        self.y -= 1
+    else:
+      print('Edge of the table')
 # end of robot object
 
 
@@ -91,13 +87,13 @@ class Robot:
 class Command:
   # called by run_robot method, open commands files reads lines and formats to uppercase and removes spaces
   def __init__(self, table:Table, robot:Robot, filename:str):
-    self.table = table
-    self.robot = robot
-    self.filename = filename
+    self.table:Table = table
+    self.robot:Robot = robot
+    self.filename:str = filename
 
   def read_commands(self) -> list[str]:
     with open(self.filename, 'r') as f:
-      commands = f.readlines()
+      commands:list[str] = f.readlines()
       for i, cmd in enumerate(commands):
         commands[i] = cmd.upper()
         commands[i] = cmd.strip()
@@ -105,7 +101,7 @@ class Command:
 
   # defining what commands to pass to the robot
   def run_robot(self) -> None:
-    robot_commands = self.read_commands()
+    robot_commands:list[str] = self.read_commands()
     for cmd in robot_commands:
       if self.robot.check_on_table():
         self.robot.command_check(cmd, self.table)
@@ -115,4 +111,5 @@ class Command:
         print('Robot not on the table')
     print('End of commands, last location is:')
     print(self.robot.location_report())
+    return self.robot.location_report()
 # end of command object
