@@ -107,8 +107,6 @@ class Command:
         self.robot.command_check(cmd, self.table)
       elif 'PLACE' in cmd:
         self.robot.command_check(cmd, self.table)
-      else:
-        print('Robot not on the table')
     if self.robot.check_on_table():
       return f'End of commands, last location is: {self.robot.position()}'
     else:

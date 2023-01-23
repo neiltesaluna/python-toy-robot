@@ -7,20 +7,22 @@ class IntegrationTests(unittest.TestCase):
   def test_a(self):
     robot = Robot()
     command = Command(table, robot, 'fixtures/test_a.txt')
-    command.run_robot()
-    self.assertEqual(robot.position(), (0, 2, 'SOUTH'))
+    self.assertEqual(command.run_robot(), "End of commands, last location is: (0, 2, 'SOUTH')")
 
   def test_b(self):
     robot = Robot()
     command = Command(table, robot, 'fixtures/test_b.txt')
-    command.run_robot()
-    self.assertEqual(robot.position(), (1, 1, 'EAST'))
+    self.assertEqual(command.run_robot(), "End of commands, last location is: (1, 1, 'EAST')")
 
   def test_c(self):
     robot = Robot()
     command = Command(table, robot, 'fixtures/test_c.txt')
-    command.run_robot()
-    self.assertEqual(robot.position(), (3, 0, 'SOUTH'))
+    self.assertEqual(command.run_robot(), "End of commands, last location is: (3, 0, 'SOUTH')")
+
+  def test_d(self):
+    robot = Robot()
+    command = Command(table, robot, 'fixtures/test_d.txt')
+    self.assertEqual(command.run_robot(), "End of commands, robot was never placed on the table!")
 
 if __name__ == '__main__':
   unittest.main()
