@@ -1,5 +1,5 @@
 import unittest
-from toy_robot.toy_robot import Table, Robot, Command
+from toy_robot.toy_robot import Table, Robot
 
 table = Table(5, 5)
 
@@ -56,10 +56,6 @@ class Tests(unittest.TestCase):
        self.assertEqual(robot.direction, orientation[len(orientation)-1])
       else:
         self.assertEqual(robot.direction, orientation[i-1])
-
-
-
-
 
 if __name__ == '__main__':
   unittest.main()
