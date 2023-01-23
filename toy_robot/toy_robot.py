@@ -8,7 +8,6 @@ class Table:
 
 # robot object
 class Robot:
-
 # defining available directions and commands
   avail_directions:tuple[str, str, str, str] = ('NORTH', 'EAST', 'SOUTH', 'WEST')
   avail_commands:tuple[str, str, str, str, str] = ('PLACE', 'REPORT', 'RIGHT', 'LEFT', 'MOVE')
@@ -18,13 +17,13 @@ class Robot:
     self.x:int = x
     self.y:int = y
     self.direction:str = direction
-  
+
 # checking commands then passing to relevant methods
   def command_check(self, command:str, table: Table) -> None:
     if 'PLACE' in command:
       self.place_on_table(command, table)
     elif 'REPORT' == command:
-      print(self.location_report())
+      print(self.position())
     elif 'RIGHT' == command or 'LEFT' == command:
       self.rotation(command)
     elif 'MOVE' == command:
@@ -33,22 +32,23 @@ class Robot:
 # returns on_table bool value
   def check_on_table(self) -> bool:
     return self.on_table
-    
+
 # returning locations x, y and direction robot is facing
-  def location_report(self) -> tuple[int, int, str]:
+  def position(self) -> tuple[int, int, str]:
     return int(self.x), int(self.y), self.direction
 
 # defining where the robot will be placed from parsing command and changes self.on_table to True
-  def place_on_table(self, command:str, table:Table) -> None:
+  def place_on_table(self, command:str, table:Table) -> str:
     _, location = command.split()
     x, y, direction = location.split(',')
     if int(x) not in range(table.width) or int(y) not in range(table.height) or direction not in self.avail_directions:
-      print('You have missed the table!')
+      return 'You have missed the table!'
     else:
       self.on_table = True
       self.x, self.y, self.direction = int(x), int(y), direction
+      return 'Robot placed on table'
 
-# comparing current direction to what index is it on 'avail_directions'. Then updating direction based on index. 
+# comparing current direction to what index is it on 'avail_directions'. Then updating direction based on index.
 # ++ for right, -- for left and also have edge cases when index reaches the start and end of sequence
   def rotation(self, command:str) -> None:
     current_direction:str = self.direction
@@ -110,6 +110,5 @@ class Command:
       else:
         print('Robot not on the table')
     print('End of commands, last location is:')
-    print(self.robot.location_report())
-    return self.robot.location_report()
+    print(self.robot.position())
 # end of command object
