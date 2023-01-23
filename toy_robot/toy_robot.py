@@ -28,6 +28,8 @@ class Robot:
       self.rotation(command)
     elif 'MOVE' == command:
       self.move(table)
+    else:
+      print(f'Seems like I don\'t know the command: {command}')
 
   def check_on_table(self) -> bool:
     return self.on_table
