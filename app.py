@@ -4,4 +4,5 @@ table = Table(5, 5)
 robot = Robot()
 command = Command(table, robot, 'commands.txt')
 
-command.run_robot()
+result = command.run_robot()
+print(result)

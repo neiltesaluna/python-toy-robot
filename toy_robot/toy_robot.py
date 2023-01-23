@@ -29,7 +29,6 @@ class Robot:
     elif 'MOVE' == command:
       self.move(table)
 
-# returns on_table bool value
   def check_on_table(self) -> bool:
     return self.on_table
 
@@ -82,7 +81,6 @@ class Robot:
       print('Edge of the table')
 # end of robot object
 
-
 # command object
 class Command:
   # called by run_robot method, open commands files reads lines and formats to uppercase and removes spaces
@@ -100,7 +98,7 @@ class Command:
       return commands
 
   # defining what commands to pass to the robot
-  def run_robot(self) -> None:
+  def run_robot(self) -> str:
     robot_commands:list[str] = self.read_commands()
     for cmd in robot_commands:
       if self.robot.check_on_table():
@@ -109,6 +107,8 @@ class Command:
         self.robot.command_check(cmd, self.table)
       else:
         print('Robot not on the table')
-    print('End of commands, last location is:')
-    print(self.robot.position())
+    if self.robot.check_on_table():
+      return f'End of commands, last location is: {self.robot.position()}'
+    else:
+      return 'End of commands, robot was never placed on the table!'
 # end of command object
