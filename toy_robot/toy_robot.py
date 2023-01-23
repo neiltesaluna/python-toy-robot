@@ -42,7 +42,7 @@ class Robot:
   def place_on_table(self, command:str, table:Table) -> None:
     _, location = command.split()
     x, y, direction = location.split(',')
-    if int(x) > table.width or int(y) > table.height or direction not in self.avail_directions:
+    if int(x) not in range(table.width) or int(y) not in range(table.height) or direction not in self.avail_directions:
       print('You have missed the table!')
     else:
       self.on_table = True
@@ -67,13 +67,13 @@ class Robot:
 # checking if movement is x or y based on direction robot is facing, then incrementing or decreasing x or y until table limit
   def move(self, table:Table) -> None:
     if self.direction == 'EAST':
-      if self.x < table.width:
+      if self.x < (table.width - 1):
         self.x += 1
     elif self.direction == 'WEST':
       if self.x > 0:
         self.x -= 1
     elif self.direction == 'NORTH':
-      if self.y < table.height:
+      if self.y < (table.height - 1):
         self.y += 1
     elif self.direction == 'SOUTH':
       if self.y > 0:
