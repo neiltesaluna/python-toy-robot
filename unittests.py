@@ -31,32 +31,50 @@ class Tests(unittest.TestCase):
     placement_test = 'PLACE 2,2,NORTH'
     robot.place_on_table(placement_test, table)
     self.assertEqual(robot.position(), (2,2,'NORTH'))
+    self.assertTrue(robot.check_on_table())
 
   # Test rotating the robot to the right
   def test_right_rotation(self):
     robot = Robot()
-    # avail_directions ('NORTH', 'EAST', 'SOUTH', 'WEST')
-    orientation = robot.avail_directions
-    for i in range(len(orientation)):
-      robot.direction = orientation[i]
+    orientation = {
+      'NORTH': 'EAST',
+      'EAST': 'SOUTH',
+      'SOUTH': 'WEST',
+      'WEST': 'NORTH'
+    }
+    for direction, expected_result in orientation.items():
+      robot.direction = direction
       robot.rotation('RIGHT')
-      if i == len(orientation)-1:
-       self.assertEqual(robot.direction, orientation[0])
-      else:
-        self.assertEqual(robot.direction, orientation[i+1])
+      self.assertEqual(robot.direction, expected_result)
 
   # Testing rotating the robot to the left
   def test_left_rotation(self):
     robot = Robot()
-    # avail_directions ('NORTH', 'EAST', 'SOUTH', 'WEST')
-    orientation = robot.avail_directions
-    for i in range(len(orientation)):
-      robot.direction = orientation[i]
+    orientation = {
+      'NORTH': 'WEST',
+      'WEST': 'SOUTH',
+      'SOUTH': 'EAST',
+      'EAST': 'NORTH'
+    }
+    for direction, expected_result in orientation.items():
+      robot.direction = direction
       robot.rotation('LEFT')
-      if i == 0:
-       self.assertEqual(robot.direction, orientation[len(orientation)-1])
-      else:
-        self.assertEqual(robot.direction, orientation[i-1])
+      self.assertEqual(robot.direction, expected_result)
+
+  # Testing robot movement depending on direction
+  def test_left_rotation(self):
+    robot = Robot()
+    orientation = {
+      'NORTH': (2,3,'NORTH'),
+      'EAST': (3,2,'EAST'),
+      'SOUTH': (2,1,'SOUTH'),
+      'WEST': (1,2,'WEST')
+    }
+    for direction, expected_result in orientation.items():
+      robot.place_on_table('PLACE 2,2,NORTH',table)
+      robot.direction = direction
+      robot.move(table)
+      self.assertEqual(robot.position(), expected_result)
 
 if __name__ == '__main__':
   unittest.main()
