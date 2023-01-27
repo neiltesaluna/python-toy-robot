@@ -28,7 +28,12 @@ jobs:
 
     - name: Auto format with autopep8
       run: |
-        autopep8 --in-place --aggressive --aggressive toy_robot
+        autopep8 --in-place --aggressive --aggressive toy_robot/blueprint.py
+        autopep8 --in-place --aggressive --aggressive toy_robot/commands.py
+        autopep8 --in-place --aggressive --aggressive toy_robot/platform.py
+        autopep8 --in-place --aggressive --aggressive toy_robot/position.py
+        autopep8 --in-place --aggressive --aggressive toy_robot/processor.py
+        autopep8 --in-place --aggressive --aggressive toy_robot/validators.py
 
     - name: Type checking with mypy
       run: |
