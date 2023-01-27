@@ -19,6 +19,7 @@ class Tests(unittest.TestCase):
     placement_edge = [
         'PLACE -1,0,NORTH',
         'PLACE 0,-1,NORTH',
+        'PLACE 0,0,POTATO',
         'PLACE 5,0,NORTH',
         'PLACE 0,5,NORTH'
     ]
