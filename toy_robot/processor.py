@@ -36,5 +36,7 @@ class Runner:
                         operation(self.platform).command(self.robot)
                     except KeyError:
                         print(f"That command {move} doesn't have an associated action! Ignoring...")
-
-        return f'End of commands, last location is: {self.robot.location.get_location()} and is facing {self.robot.direction.name}'
+        if self.robot.on_table:
+            return f'End of commands, last location is: {self.robot.location.get_location()} {self.robot.direction.name}'
+        else:
+            return 'End of commands, robot was never placed on the table!'
