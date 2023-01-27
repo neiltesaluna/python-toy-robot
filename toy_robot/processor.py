@@ -1,8 +1,11 @@
 from toy_robot.robot import Robot
-from toy_robot.commands import Commands, Report
+from toy_robot.commands import Commands, Place
 from toy_robot.platform import Platform
-from toy_robot.validators import Validator, PlacementCheck
-from abc import ABC, abstractmethod
+from typing import TypeAlias, Mapping, TypeVar
+
+
+CommandsChild = TypeVar('CommandsChild', bound=Commands)
+
 # reads the file for list of commands
 class MovesetParser:
     def __init__(self, filename:str):
@@ -23,13 +26,12 @@ class Runner:
         self.platform = platform
 
     def action(self) -> str:
-        available_actions = {action_class.__name__.upper(): action_class for action_class in Commands.__subclasses__()}
+        available_actions: Mapping[str, TypeAlias[CommandsChild]] = {action_class.__name__.upper(): action_class for action_class in Commands.__subclasses__()}
         for move in self.moveset:
             if move in available_actions:
                 operation = available_actions[move]()
                 operation.command(self.robot)
             elif "PLACE" in move:
-                place_command = available_actions["PLACE"]
-                place_command(move, self.platform, PlacementCheck).command(self.robot)
+                Place(move, self.platform).command(self.robot)
 
         return f'End of commands, last location is: {self.robot.location.get_location()} and is facing {self.robot.direction.name}'
