@@ -24,7 +24,6 @@ class Move(Commands):
     def __init__(self, platform: Platform):
         self.platform = platform
     def command(self, robot: Robot) -> tuple[Location, Direction]:
-        move_validator = PlatformCheck()
         move = {
             "NORTH":(0, 1),
             "EAST": (1, 0),
@@ -32,7 +31,9 @@ class Move(Commands):
             "WEST": (-1, 0)
         }
         x, y = move[robot.direction.name]
-        robot.location.update_location(x, y)
+        move_validator = PlatformCheck()
+        if move_validator.check(self.platform, robot.location.x + x, robot.location.y + y, robot.direction):
+            robot.location.update_location(x, y)
         return robot.location, robot.direction
 
 class Left(Commands):

@@ -10,11 +10,15 @@ class Validator(ABC):
 class PlatformCheck(Validator):
     def check(self, platform: Platform, x: int, y: int, direction: Direction) -> bool:
         available_placement = platform.available_blocks()
-        try:
-            if available_placement[x][y] == 1:
-                return True
-            else:
+        max_x, max_y = platform.max_dimensions()
+        if x in range(max_x) and y in range(max_y):
+            try:
+                if available_placement[x][y] == 1:
+                    return True
+                else:
+                    return False
+            except IndexError:
+                print("You've missed the table!")
                 return False
-        except IndexError:
-            print("You've missed the table!")
+        else:
             return False
