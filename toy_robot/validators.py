@@ -7,8 +7,7 @@ class Validator(ABC):
     def check(self, platform: Platform, x: int, y: int, direction: Direction) -> bool:
         pass
 
-class PlacementCheck(Validator):
-
+class PlatformCheck(Validator):
     def check(self, platform: Platform, x: int, y: int, direction: Direction) -> bool:
         available_placement = platform.available_blocks()
         try:

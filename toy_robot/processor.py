@@ -2,7 +2,7 @@ from typing import TypeAlias, Mapping, TypeVar
 from toy_robot.robot import Robot
 from toy_robot.commands import Commands, Place
 from toy_robot.platform import Platform
-from toy_robot.validators import PlacementCheck
+from toy_robot.validators import PlatformCheck
 
 
 CommandsChild = TypeVar('CommandsChild', bound=Commands)
@@ -30,7 +30,7 @@ class Runner:
         available_actions: Mapping[str, TypeAlias[CommandsChild]] = {action_class.__name__.upper(): action_class for action_class in Commands.__subclasses__()}
         for move in self.moveset:
             if "PLACE" in move:
-                place_validator = PlacementCheck()
+                place_validator = PlatformCheck()
                 Place(move, self.platform, place_validator).command(self.robot)
             else:
                 if self.robot.on_table:
