@@ -1,4 +1,4 @@
-from typing import TypeAlias, Mapping, TypeVar
+from typing import TypeAlias, Mapping, TypeVar, Type
 from toy_robot.robot import Robot
 from toy_robot.commands import Commands, Place
 from toy_robot.platform import Platform
@@ -33,10 +33,10 @@ class Runner:
                 Place(move, self.platform).command(self.robot)
             else:
                 if self.robot.on_table:
-                    operation = available_actions.get(move)
                     try:
+                        operation = available_actions[move]
                         operation(self.platform).command(self.robot)
-                    except TypeError:
+                    except KeyError:
                         print(f"That command {move} doesn't have an associated action! Ignoring...")
 
         return f'End of commands, last location is: {self.robot.location.get_location()} and is facing {self.robot.direction.name}'
