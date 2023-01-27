@@ -6,8 +6,9 @@ from toy_robot.platform import Table
 def main():
     robot = Robot()
     moveset = MovesetParser('moveset.txt').parse_moveset()
-    runner = Runner(moveset, robot)
     table = Table(5, 5)
+    runner = Runner(moveset, robot, table)
+
     print(table.available_blocks())
     runner.action()
 

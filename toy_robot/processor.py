@@ -1,5 +1,7 @@
 from toy_robot.robot import Robot
 from toy_robot.commands import Commands, Report
+from toy_robot.platform import Platform
+from toy_robot.validators import Validator, PlacementCheck
 from abc import ABC, abstractmethod
 # reads the file for list of commands
 class MovesetParser:
@@ -14,15 +16,11 @@ class MovesetParser:
                 moveset[i] = cmd.strip()
             return moveset
 
-class Validator(ABC):
-    @abstractmethod
-    def check(self, robot: Robot) -> bool:
-        pass
-
 class Runner:
-    def __init__(self, moveset: list[str], robot: Robot):
+    def __init__(self, moveset: list[str], robot: Robot, platform: Platform):
         self.moveset = moveset
         self.robot = robot
+        self.platform = platform
 
     def action(self):
         available_actions = {action_class.__name__.upper(): action_class for action_class in Commands.__subclasses__()}
@@ -32,4 +30,5 @@ class Runner:
                 operation().command(self.robot)
             elif "PLACE" in move:
                 place_command = available_actions["PLACE"]
-                print(place_command(move).command(self.robot))
+
+                print(place_command(move, self.platform, PlacementCheck).command(self.robot))
