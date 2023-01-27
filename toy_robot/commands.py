@@ -22,11 +22,26 @@ class Move(Commands):
 
 class Left(Commands):
     def command(self, robot: Robot) -> tuple[Location, Direction]:
-        pass
+        left = {
+            Direction.NORTH: Direction.WEST,
+            Direction.WEST: Direction.SOUTH,
+            Direction.SOUTH: Direction.EAST,
+            Direction.EAST: Direction.NORTH
+        }
+        robot.direction = left[robot.direction]
+        return robot.location, robot.direction
 
 class Right(Commands):
     def command(self, robot: Robot) -> tuple[Location, Direction]:
-        pass
+        right = {
+            Direction.NORTH: Direction.EAST,
+            Direction.EAST: Direction.SOUTH,
+            Direction.SOUTH: Direction.WEST,
+            Direction.WEST: Direction.NORTH
+        }
+        robot.direction = right[robot.direction]
+        return robot.location, robot.direction
+
 
 class Place(Commands):
     def __init__(self, place_command:str, platform: Platform, validator: Validator):
