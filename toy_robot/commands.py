@@ -69,9 +69,11 @@ class Place(Commands):
         self.platform = platform
     def command(self, robot: Robot) -> tuple[Location, Direction]:
         place_validator = PlatformCheck()
+        enum_directions = [enum.name for enum in Direction]
         _, location = self.place_command.split()
         x, y, direction = location.split(',')
-        if place_validator.check(self.platform, int(x), int(y), Direction[direction]):
+        if place_validator.check(self.platform, int(x), int(y), Direction[direction]
+        and direction in enum_directions):
             robot.on_table = True
             robot.location, robot.direction = Location(int(x),int(y)), Direction[direction]
         return robot.location, robot.direction
