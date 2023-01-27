@@ -28,16 +28,16 @@ jobs:
 
     - name: Auto format with autopep8
       run: |
-        autopep8 --in-place --aggressive --aggressive toy_robot/toy_robot.py
+        autopep8 --in-place --aggressive --aggressive toy_robot
 
     - name: Type checking with mypy
       run: |
-        mypy toy_robot/toy_robot.py
+        mypy toy_robot
 
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 toy_robot/toy_robot.py --count --ignore=E501
+        flake8 toy_robot --count --ignore=E501
 
     - name: Test with unittest module
       run: |
