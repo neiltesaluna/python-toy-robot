@@ -1,9 +1,7 @@
 from typing import TypeAlias, Mapping, TypeVar, Type
-from toy_robot.robot import Robot
+from toy_robot.blueprint import Robot
 from toy_robot.commands import Commands, Place
 from toy_robot.platform import Platform
-from toy_robot.validators import PlatformCheck
-
 
 CommandsChild = TypeVar('CommandsChild', bound=Commands)
 

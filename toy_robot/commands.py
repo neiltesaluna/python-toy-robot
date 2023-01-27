@@ -1,6 +1,6 @@
 # listing out type of robot commands
 from abc import ABC, abstractmethod
-from toy_robot.robot import Robot
+from toy_robot.blueprint import Robot
 from toy_robot.position import Location, Direction
 from toy_robot.platform import Platform
 from toy_robot.validators import PlatformCheck

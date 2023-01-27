@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.11
-from toy_robot.robot import Robot
+from toy_robot.blueprint import Robot
 from toy_robot.processor import MovesetParser, Runner
 from toy_robot.platform import Table
 
