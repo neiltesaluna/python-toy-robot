@@ -30,13 +30,12 @@ class Runner:
         available_actions: Mapping[str, TypeAlias[CommandsChild]] = {action_class.__name__.upper(): action_class for action_class in Commands.__subclasses__()}
         for move in self.moveset:
             if "PLACE" in move:
-                place_validator = PlatformCheck()
-                Place(move, self.platform, place_validator).command(self.robot)
+                Place(move, self.platform).command(self.robot)
             else:
                 if self.robot.on_table:
                     operation = available_actions.get(move)
                     try:
-                        operation().command(self.robot)
+                        operation(self.platform).command(self.robot)
                     except TypeError:
                         print(f"That command {move} doesn't have an associated action! Ignoring...")
 
