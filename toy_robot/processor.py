@@ -1,4 +1,4 @@
-from typing import TypeAlias, Mapping, TypeVar, Type
+from typing import TypeAlias, Mapping, TypeVar
 from toy_robot.blueprint import Robot
 from toy_robot.commands import Commands, Place
 from toy_robot.platform import Platform
