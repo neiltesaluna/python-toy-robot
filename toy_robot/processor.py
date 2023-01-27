@@ -29,11 +29,15 @@ class Runner:
     def action(self) -> str:
         available_actions: Mapping[str, TypeAlias[CommandsChild]] = {action_class.__name__.upper(): action_class for action_class in Commands.__subclasses__()}
         for move in self.moveset:
-            if move in available_actions:
-                operation = available_actions[move]()
-                operation.command(self.robot)
-            elif "PLACE" in move:
+            if "PLACE" in move:
                 place_validator = PlacementCheck()
                 Place(move, self.platform, place_validator).command(self.robot)
+            else:
+                if self.robot.on_table:
+                    operation = available_actions.get(move)
+                    try:
+                        operation().command(self.robot)
+                    except TypeError:
+                        print(f"That command {move} doesn't have an associated action! Ignoring...")
 
         return f'End of commands, last location is: {self.robot.location.get_location()} and is facing {self.robot.direction.name}'
