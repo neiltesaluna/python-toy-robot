@@ -22,13 +22,14 @@ class Runner:
         self.robot = robot
         self.platform = platform
 
-    def action(self):
+    def action(self) -> str:
         available_actions = {action_class.__name__.upper(): action_class for action_class in Commands.__subclasses__()}
         for move in self.moveset:
             if move in available_actions:
-                operation = available_actions[move]
-                operation().command(self.robot)
+                operation = available_actions[move]()
+                operation.command(self.robot)
             elif "PLACE" in move:
                 place_command = available_actions["PLACE"]
+                place_command(move, self.platform, PlacementCheck).command(self.robot)
 
-                print(place_command(move, self.platform, PlacementCheck).command(self.robot))
+        return f'End of commands, last location is: {self.robot.location.get_location()} and is facing {self.robot.direction.name}'

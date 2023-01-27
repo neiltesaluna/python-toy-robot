@@ -1,7 +1,7 @@
 # listing out type of robot commands
 from abc import ABC, abstractmethod
 from toy_robot.robot import Robot
-from toy_robot.position import Direction
+from toy_robot.position import Location, Direction
 from toy_robot.platform import Platform
 from toy_robot.validators import Validator
 
@@ -11,23 +11,23 @@ class Commands(ABC):
     direction: Direction
 
     @abstractmethod
-    def command(self, robot: Robot) -> tuple[int, int, Direction]:
+    def command(self, robot: Robot) -> tuple[Location, Direction]:
         pass
 
 class Report(Commands):
-    def command(self, robot: Robot) -> tuple[int, int, Direction]:
-        return robot.x, robot.y, robot.direction
+    def command(self, robot: Robot) -> tuple[Location, Direction]:
+        return robot.location, robot.direction
 
 class Move(Commands):
-    def command(self, robot: Robot) -> tuple[int, int, Direction]:
+    def command(self, robot: Robot) -> tuple[Location, Direction]:
         pass
 
 class Left(Commands):
-    def command(self, robot: Robot) -> tuple[int, int, Direction]:
+    def command(self, robot: Robot) -> tuple[Location, Direction]:
         pass
 
 class Right(Commands):
-    def command(self, robot: Robot) -> tuple[int, int, Direction]:
+    def command(self, robot: Robot) -> tuple[Location, Direction]:
         pass
 
 class Place(Commands):
@@ -36,11 +36,11 @@ class Place(Commands):
         self.platform = platform
         self.validator = validator
 
-    def command(self, robot: Robot) -> tuple[int, int, Direction]:
+    def command(self, robot: Robot) -> tuple[Location, Direction]:
         _, location = self.place_command.split()
         x, y, direction = location.split(',')
         placement_validator = self.validator(self.platform, int(x), int(y), Direction[direction])
         if placement_validator.check():
             robot.on_table = True
-            robot.x, robot.y, robot.direction = int(x), int(y), Direction[direction]
-        return robot.x, robot.y, robot.direction
+            robot.location, robot.direction = Location(int(x),int(y)), Direction[direction]
+        return robot.location, robot.direction

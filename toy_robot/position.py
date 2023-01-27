@@ -5,7 +5,7 @@ class Location:
         self.x = x
         self.y = y
 
-    def location(self):
+    def get_location(self):
         return self.x, self.y
 
 # determining the direction the robot is facing

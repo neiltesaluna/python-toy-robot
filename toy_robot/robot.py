@@ -11,7 +11,9 @@ class Robot(ABC):
         on_table: bool = False
         ):
 
-            self.x = location.x
-            self.y = location.y
+            self.location = location
             self.direction = direction
             self.on_table = on_table
+
+    def get_orientation(self):
+        pass

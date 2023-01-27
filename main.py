@@ -8,9 +8,7 @@ def main():
     moveset = MovesetParser('moveset.txt').parse_moveset()
     table = Table(5, 5)
     runner = Runner(moveset, robot, table)
-
-    print(table.available_blocks())
-    runner.action()
+    print(runner.action())
 
 if __name__ == '__main__':
     main()
