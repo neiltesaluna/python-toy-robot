@@ -6,9 +6,6 @@ from toy_robot.platform import Platform
 from toy_robot.validators import Validator
 
 class Commands(ABC):
-    x: int
-    y: int
-    direction: Direction
 
     @abstractmethod
     def command(self, robot: Robot) -> tuple[Location, Direction]:
@@ -16,6 +13,7 @@ class Commands(ABC):
 
 class Report(Commands):
     def command(self, robot: Robot) -> tuple[Location, Direction]:
+        print(robot.location.x, robot.location.y, robot.direction.name)
         return robot.location, robot.direction
 
 class Move(Commands):
@@ -39,8 +37,7 @@ class Place(Commands):
     def command(self, robot: Robot) -> tuple[Location, Direction]:
         _, location = self.place_command.split()
         x, y, direction = location.split(',')
-        placement_validator = self.validator(self.platform, int(x), int(y), Direction[direction])
-        if placement_validator.check():
+        if self.validator.check(self.platform, int(x), int(y), Direction[direction]):
             robot.on_table = True
             robot.location, robot.direction = Location(int(x),int(y)), Direction[direction]
         return robot.location, robot.direction

@@ -1,7 +1,8 @@
+from typing import TypeAlias, Mapping, TypeVar
 from toy_robot.robot import Robot
 from toy_robot.commands import Commands, Place
 from toy_robot.platform import Platform
-from typing import TypeAlias, Mapping, TypeVar
+from toy_robot.validators import PlacementCheck
 
 
 CommandsChild = TypeVar('CommandsChild', bound=Commands)
@@ -32,6 +33,7 @@ class Runner:
                 operation = available_actions[move]()
                 operation.command(self.robot)
             elif "PLACE" in move:
-                Place(move, self.platform).command(self.robot)
+                place_validator = PlacementCheck()
+                Place(move, self.platform, place_validator).command(self.robot)
 
         return f'End of commands, last location is: {self.robot.location.get_location()} and is facing {self.robot.direction.name}'
